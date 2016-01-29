@@ -1,0 +1,5 @@
+config APP_GDB_TEST
+bool "GDB test application"
+default n
+    help
+        GDB test

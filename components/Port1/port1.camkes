@@ -1,0 +1,6 @@
+
+component Port1 {
+  control;
+  dataport Buf d1;
+  dataport Buf d2;
+}
