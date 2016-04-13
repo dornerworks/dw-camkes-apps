@@ -10,6 +10,6 @@ assembly {
   }
   configuration {
     sender1.serial_attributes = "0x3f8:0x3ff";
-    sender1.debug = "True"
+    sender1.debug = "True";
   }
 }
