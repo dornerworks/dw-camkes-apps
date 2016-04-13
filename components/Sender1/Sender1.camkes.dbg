@@ -1,9 +1,0 @@
-import "../../interfaces/MyInterface.idl4";
-
-component debug_Sender1 {
-
-  uses CAmkES_Debug fault;
-  provides CAmkES_Debug GDB_delegate;
-  control;
-  uses MyInterface out1;
-}
