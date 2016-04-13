@@ -4,11 +4,12 @@ import "components/Receiver1/Receiver1.camkes";
 
 assembly {
   composition {
-    debug_component Sender1 sender1;
+    component Sender1 sender1;
     component Receiver1 receiver1;
     connection seL4RPC conn1(from sender1.out1, to receiver1.in1);
   }
   configuration {
     sender1.serial_attributes = "0x3f8:0x3ff";
+    sender1.debug = "True"
   }
 }
