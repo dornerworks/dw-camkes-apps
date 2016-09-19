@@ -1,3 +1,0 @@
-procedure MyInterface {
-	void print(in string message);
-}

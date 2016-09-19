@@ -13,6 +13,4 @@
 # Approved for Public Release, Distribution Unlimited.
 #
 
-apps-$(CONFIG_APP_GDB_TEST) += gdb_test
-gdb_test: common libsel4 libmuslc libsel4vka libsel4allocman libsel4muslcsys \
-libsel4vspace libsel4utils libcpio libutils libsel4camkes libsel4sync libsel4debug libsel4muslccamkes libsel4simple libsel4simple-default libsel4platsupport libethdrivers liblwip libsel4bench
+Receiver1_CFILES := components/Receiver1/src/receiver1.c

@@ -14,9 +14,6 @@
  *
  */
 
-import "../../interfaces/Print.idl4";
-
-component Sender1 {
-    control;
-    uses Printer send;
+procedure Printer {
+	void print(in string message);
 }

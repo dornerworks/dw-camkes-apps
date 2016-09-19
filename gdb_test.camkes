@@ -1,14 +1,35 @@
+/*
+ * Copyright 2017, DornerWorks
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(DORNERWORKS_GPL)
+ *
+ * This data was produced by DornerWorks, Ltd. of Grand Rapids, MI, USA under
+ * a DARPA SBIR, Contract Number D16PC00107.
+ *
+ * Approved for Public Release, Distribution Unlimited.
+ *
+ */
+
 import <std_connector.camkes>;
 import "components/Sender1/Sender1.camkes";
 import "components/Receiver1/Receiver1.camkes";
 
-assembly {
-  composition {
-    component Sender1 sender1;
-    component Receiver1 receiver1;
-    connection seL4RPC conn1(from sender1.out1, to receiver1.in1);
+assembly
+{
+  composition
+  {
+    component Sender1 sender;
+    component Receiver1 receiver;
+
+    connection seL4RPC conn1(from sender.send, to receiver.recv);
   }
-  configuration {
-    sender1.debug = "True";
+  configuration
+  {
+    sender.debug = "True";
+    receiver.debug = "False";
   }
 }
