@@ -1,4 +1,0 @@
-component Consumer1 {
-  control;
-  consumes MyEvent consume1;
-}

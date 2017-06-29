@@ -1,6 +1,0 @@
-import "../../interfaces/MyInterface.idl4";
-
-component Sender2 {
-  control;
-  uses MyInterface out2;
-}

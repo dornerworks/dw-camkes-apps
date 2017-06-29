@@ -1,6 +1,0 @@
-
-component Port2 {
-  control;
-  dataport Buf s1;
-  dataport Buf s2;
-}

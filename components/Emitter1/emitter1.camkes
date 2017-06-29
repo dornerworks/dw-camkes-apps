@@ -1,4 +1,0 @@
-component Emitter1 {
-	control;
-	emits MyEvent emit1;
-}
