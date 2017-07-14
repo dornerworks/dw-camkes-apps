@@ -13,8 +13,15 @@
 # Approved for Public Release, Distribution Unlimited.
 #
 
-config APP_GDB_TEST
+menuconfig APP_GDB_TEST
 bool "GDB test application"
 default n
     help
         GDB test
+
+config GDB_PRINT_DEBUG
+bool "Print the sent and received GDB Packets. Warning, may effect GDB timing and performance"
+depends on APP_GDB_TEST
+default n
+    help
+        debug printing
