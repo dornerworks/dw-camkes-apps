@@ -1,0 +1,52 @@
+<!-- LICENSE: http://git.savannah.nongnu.org/cgit/lwip.git/tree/COPYING -->
+<script src="request.js" type="text/javascript"></script>
+<script type="text/javascript">
+  function print()
+  {
+  make_request("print.cgi");
+  }
+  var data_received = false;
+  function parse_vars(data)
+  {
+  var ret = data.localeCompare("PRINTED");
+  if(!ret) {}
+  else {
+  time.innerHTML = data; }
+  }
+  function loop()
+  {
+  if (!data_received)
+  {
+  make_request("timerdata.sts");
+  }
+  setTimeout("loop()", 500);
+  }
+  window.onload = loop;
+</script>
+<table style="width: 500px; height: 210px;">
+  <tbody>
+    <tr valign="top">
+      <td style="width: 500px;"><center>
+          <h1><span style="font-family: terminal, monaco, monospace; color: #59b941;">seL4 Web Server</span></h1>
+        </center>
+        <p><span style="font-family: terminal, monaco, monospace; color: #525252;">The web page you are watching was served by a simple web server running on top of seL4 using the lightweight TCP/IP stack: lwIP.</span></p>
+        <p><span style="font-family: terminal, monaco, monospace; color: #525252;">Developing dependable systems requires built-in security and safety at all levels of the system, including in the lowest-level system software: the operating system and device access software.&nbsp;seL4 provides the secure software base that enforces separation between trusted and untrusted parts of a system. More information on seL4 can be found at&nbsp;<a style="color: #525252;" href="https://sel4.systems">https://sel4.systems</a>.</span></p>
+        <p><span style="font-family: terminal, monaco, monospace; color: #525252;">More information about lwIP can be found at the lwIP homepage at <a style="color: #525252;" href="http://savannah.nongnu.org/projects/lwip/">http://savannah.nongnu.org/projects/lwip/</a> or at the lwIP wiki at <a style="color: #525252;" href="http://lwip.wikia.com/">http://lwip.wikia.com/</a>.</span></p>
+        <p>&nbsp;</p>
+        <p><a title="DornerWorks" href="http://www.dornerworks.com" target="_blank"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://dornerworks.com/wp-content/themes/envigor/images/dornerworks-logo.jpg" alt="DornerWorks" width="247" height="45" /></a></p>
+        <p><a title="seL4" href="http://sel4.systems" target="_blank"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://dornerworks.com/wp-content/uploads/2016/10/seL4-logo-300x150.png" alt="seL4" width="90" height="45" /></a></p>
+        <div class="hrw"><hr /></div>
+        <center>
+          <h2><span style="font-family: terminal, monaco, monospace; color: #59b941;">Server Operation Time</span></h2>
+          <div id="time"><span style="font-family: terminal, monaco, monospace; color: #525252;">0 Days, 0 Hours, 0 Minutes, 0 Seconds</span></div>
+        </center>
+        <p>&nbsp;</p>
+        <div class="hrw"><hr /></div>
+        <center>
+          <h2><span style="font-family: terminal, monaco, monospace; color: #59b941;">Print on Host</span></h2>
+        </center>
+        <center><input type=image src="http://i.imgur.com/f1A6vVl.png" alt="SUBMIT" width="116" height="45" onclick="print()"></center>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,56 @@
+/*
+ * Copyright 2014, NICTA
+ * Copyright 2017, DornerWorks
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(NICTA_GPL)
+ */
+
+import <Ethdriver.idl4>;
+import <http.idl4>;
+import <file_system.idl4>;
+import <TIMER.idl4>;
+
+component Router {
+    include "TimerType.h";
+    include "fs.h";
+
+    control;
+
+    has mutex lwip;
+    uses Ethdriver ethdriver;
+
+    uses TIMER timer;
+    dataport TimerMMIO_t timer_reg;
+    consumes IRQ timer_irq;
+
+    uses TIMER tcp_timer;
+    dataport TimerMMIO_t tcp_timer_reg;
+    consumes IRQ tcp_timer_irq;
+
+    attribute string ip_addr;
+    attribute string gw_addr;
+    attribute string multicast_addr;
+    attribute string mask_addr;
+
+    uses HTTPServer http_server;
+    uses FileSystem fs;
+    dataport fs_file_t fs_mem;
+}
+
+component Router_hw {
+    hardware;
+
+    provides HTTPServer http;
+
+    dataport TimerMMIO_t timer_reg;
+    provides TIMER timer_inf;
+    emits IRQ timer_irq;
+
+    dataport TimerMMIO_t tcp_timer_reg;
+    provides TIMER tcp_timer_inf;
+    emits IRQ tcp_timer_irq;
+}

@@ -1,0 +1,36 @@
+/*
+ * Copyright 2017, DornerWorks
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(DORNERWORKS_GPL)
+ */
+
+import <std_connector.camkes>;
+
+connector seL4Ethdriver {
+    from Procedure template "seL4Ethdriver-from.template.c" with 0 threads;
+    to Procedure template "seL4Ethdriver-to.template.c";
+}
+
+connector seL4HTTPServer {
+    from Procedure template "seL4HTTPServer.template.c";
+    to hardware Procedure;
+}
+
+connector seL4MultiSharedData {
+    from Dataport template "seL4MultiSharedData-from.template.c";
+    to Dataport template "seL4MultiSharedData-to.template.c";
+}
+
+connector seL4GlobalAsynchCallback {
+    from Event template "seL4GlobalAsynchCallback-from.template.c";
+    to Event template "seL4GlobalAsynchCallback-to.template.c";
+}
+
+connector seL4TIMER {
+    from Procedure template "seL4TIMER.template.c";
+    to hardware Procedure;
+}
