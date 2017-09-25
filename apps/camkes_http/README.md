@@ -12,6 +12,14 @@
 This project utilizes the CAmkES protocol to implement an HTTP Server that can be accessed by anyone
 on the network.
 
+## Getting the Source Code
+```
+mkdir camkes_http; cd camkes_http
+repo init -u https://github.com/dornerworks/dw-camkes-manifests -m http_server.xml
+repo sync
+python apps/camkes_http/components/FileSystem/makefs.py
+make http_server_defconfig; make
+```
 ## System Setup
 This system contains three major components that are used to setup the Server: FileSystem, Router, &
 Ethdriver. This document will overview each component's purpose and how the Server functions.
@@ -70,9 +78,9 @@ Each file has a maximum file size, defined in __fs.h__
 ```
 #define MAX_FS_FILE_SIZE 4096
 
-typedef struct fs\_file
+typedef struct fs_file
 {
-    char data[MAX\_FS\_FILE\_SIZE];
+    char data[MAX_FS_FILE_SIZE];
 ```
 
 For our simple webpages, this small size will suffice. For larger webpages, increase this
