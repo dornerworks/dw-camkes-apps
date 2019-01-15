@@ -754,6 +754,8 @@ void irq_handle(void)
     err = ethdriver_unlock();
 }
 
+extern ethif_driver_init ethif_init;
+
 /* Post Init:
  *
  *   Initializes the ".simple" system, which allows for DMA operations on
@@ -850,7 +852,7 @@ void post_init(void)
     eth_driver.cb_cookie = NULL;
     eth_driver.i_cb = ethdriver_callbacks;
 
-    struct eth_plat_config *config = (struct eth_plat_config *)malloc(sizeof(struct eth_plat_config));
+    struct arm_eth_plat_config *config = (struct arm_eth_plat_config *)malloc(sizeof(struct arm_eth_plat_config));
     plat_configure_ethdriver(config);
 
     if (num_clients > 1) {
@@ -861,7 +863,7 @@ void post_init(void)
         config->prom_mode = 0;
     }
 
-    error = config->init(&eth_driver, ioops, (void *)config);
+    error = ethif_init(&eth_driver, ioops, (void *)config);
     assert(!error);
 
     done_init = 1;

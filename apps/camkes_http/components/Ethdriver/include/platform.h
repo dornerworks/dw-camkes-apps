@@ -10,4 +10,6 @@
 
 #include <ethdrivers/plat/eth_plat.h>
 
-void plat_configure_ethdriver(struct eth_plat_config *plat_config);
+ethif_driver_init ethif_init;
+
+void plat_configure_ethdriver(struct arm_eth_plat_config *plat_config);

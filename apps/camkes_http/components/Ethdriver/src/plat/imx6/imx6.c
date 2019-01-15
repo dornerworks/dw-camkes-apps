@@ -13,7 +13,11 @@
 #include <ethdrivers/imx6.h>
 #include <ethdrivers/raw.h>
 
-void plat_configure_ethdriver(struct eth_plat_config *plat_config) {
+#include <platform.h>
 
-    plat_config->init = ethif_imx6_init;
+void plat_configure_ethdriver(struct arm_eth_plat_config *plat_config) {
+
+    if(!ethif_init) {
+        ethif_init = &ethif_imx6_init;
+    }
 }

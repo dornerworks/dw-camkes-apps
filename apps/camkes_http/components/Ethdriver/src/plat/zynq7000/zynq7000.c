@@ -13,8 +13,11 @@
 #include <ethdrivers/zynq7000.h>
 #include <ethdrivers/raw.h>
 
-void plat_configure_ethdriver(struct eth_plat_config *plat_config) {
+void plat_configure_ethdriver(struct arm_eth_plat_config *plat_config) {
 
-    plat_config->init = ethif_zynq7000_init;
+    if(!ethif_init) {
+        ethif_init = &ethif_zynq7000_init;
+    }
+
     plat_config->buffer_addr = (void *)EthDriver;
 }
