@@ -1,5 +1,5 @@
 <!---
- * Copyright 2017, DornerWorks
+ * Copyright 2019, DornerWorks
  *
  * This software may be distributed and modified according to the terms of
  * the GNU General Public License version 2. Note that NO WARRANTY is provided.
@@ -14,11 +14,12 @@ on the network.
 
 ## Getting the Source Code
 ```
-mkdir camkes_http; cd camkes_http
-repo init -u https://github.com/dornerworks/dw-camkes-manifests -m http_server.xml
-repo sync
-python apps/camkes_http/components/FileSystem/makefs.py
-make http_server_defconfig; make
+$ mkdir camkes_http; cd camkes_http
+$ repo init -u https://github.com/dornerworks/dw-camkes-manifests -m http_server.xml
+$ repo sync
+$ mkdir build && cd build
+$ ../init-build.sh -DCROSS_COMPILER_PREFIX=arm-linux-gnueabi-
+$ ninja
 ```
 ## System Setup
 This system contains three major components that are used to setup the Server: FileSystem, Router, &
