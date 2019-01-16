@@ -13,6 +13,9 @@ set(KernelArch arm CACHE STRING "" FORCE)
 set(KernelARMPlatform "sabre" CACHE STRING "" FORCE)
 set(KernelArmSel4Arch "aarch32" CACHE STRING "" FORCE)
 
+# We need a slightly bigger root cnode to avoid conflict with the CapDL Loader
+set(KernelRootCNodeSizeBits 14 CACHE STRING "" FORCE)
+
 if ((NOT CROSS_COMPILER_PREFIX) OR ("${CROSS_COMPILER_PREFIX}" STREQUAL ""))
     message(WARNING "Set -DCROSS_COMPILER_PREFIX=arm-linux-gnueabi-")
 endif()
