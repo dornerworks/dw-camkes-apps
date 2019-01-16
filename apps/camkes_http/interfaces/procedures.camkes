@@ -24,13 +24,3 @@ connector seL4MultiSharedData {
     from Dataport template "seL4MultiSharedData-from.template.c";
     to Dataport template "seL4MultiSharedData-to.template.c";
 }
-
-connector seL4GlobalAsynchCallback {
-    from Event template "seL4GlobalAsynchCallback-from.template.c";
-    to Event template "seL4GlobalAsynchCallback-to.template.c";
-}
-
-connector seL4TIMER {
-    from Procedure template "seL4TIMER.template.c";
-    to hardware Procedure;
-}

@@ -46,14 +46,15 @@
 
 #include <lwip/tcp_impl.h>
 
+#define EVENT_TIMER 0
+#define TCP_TIMER   1
+
 /* Timer counter to handle calling slow-timer from tcp_tmr() */
 static uint8_t tcp_timer;
 
 /* Called periodically to dispatch TCP timers. */
-void tcp_timer_irq_handle(void)
+void tcp_timer_handle(void)
 {
-    tcp_timer_handle_interrupt();
-
     /* Call tcp_fasttmr() every 250 ms */
     tcp_fasttmr();
 
@@ -272,12 +273,20 @@ void pre_init(void) {
     if (ip_addr_ismulticast(&multicast)) {
         igmp_joingroup(&ipaddr, &multicast);
     }
+
+    /* 1s Timer Event for updating webpage */
+    event_timer_periodic(EVENT_TIMER, NS_IN_S);
+
+    /* 250ms TCP Timer */
+    event_timer_periodic(TCP_TIMER, NS_IN_S / 4);
 }
 
 /* Provided by the Ethdriver template.
  * Returns the Endpoint the Ethdriver will call when there is data for the router
  */
 seL4_CPtr ethdriver_notification(void);
+
+void event_handle(void);
 
 /* run:
  *
@@ -288,11 +297,27 @@ seL4_CPtr ethdriver_notification(void);
 int run(void)
 {
     int err UNUSED;
+
+    int global_ep = ethdriver_notification();
+    seL4_Word badge;
+
     while(1)
     {
-        seL4_Wait(ethdriver_notification(), NULL);
-        err = lwip_lock();
-        ethif_lwip_handle_irq(&_lwip_driver, 0);
-        err = lwip_unlock();
+        seL4_Wait(global_ep, &badge);
+        /* Handle Ethernet IRQ */
+        if (badge == 0) {
+            err = lwip_lock();
+            ethif_lwip_handle_irq(&_lwip_driver, 0);
+            err = lwip_unlock();
+        }
+        else if (badge == 1) {
+            uint32_t completed = event_timer_completed();
+            if (completed & BIT(TCP_TIMER)) {
+                tcp_timer_handle();
+            }
+            if (completed & BIT(EVENT_TIMER)) {
+                event_handle();
+            }
+        }
     }
 }

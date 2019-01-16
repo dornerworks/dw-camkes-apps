@@ -15,28 +15,28 @@
  */
 
 import <procedures.camkes>;
+import <global-connectors.camkes>;
 
+/* Local Components */
 import <Ethdriver/Ethdriver.camkes>;
 import <Router/Router.camkes>;
 import <FileSystem/FileSystem.camkes>;
+
+/* Global Components */
+import <TimeServer/TimeServer.camkes>;
 
 assembly {
   composition {
 
     component FileSystem filesystem;
-    component Router_hw router_hw;
     component Router router;
+    component Router_hw router_hw;
+    component TimeServer timeserver;
 
     component Ethdriver ethdriver;
     component HWEthDriver HWEthdriver;
 
-    connection seL4TIMER timer_conn(from router.timer, to router_hw.timer_inf);
-    connection seL4HardwareMMIO timer_reg(from router.timer_reg, to router_hw.timer_reg);
-    connection seL4HardwareInterrupt timer_irq(from router_hw.timer_irq, to router.timer_irq);
-
-    connection seL4TIMER tcp_timer_conn(from router.tcp_timer, to router_hw.tcp_timer_inf);
-    connection seL4HardwareMMIO tcp_timer_reg(from router.tcp_timer_reg, to router_hw.tcp_timer_reg);
-    connection seL4HardwareInterrupt tcp_timer_irq(from router_hw.tcp_timer_irq, to router.tcp_timer_irq);
+    connection seL4TimeServer event_timer(from router.event_timer, to timeserver.the_timer);
 
     connection seL4HTTPServer http_server(from router.http_server, to router_hw.http);
     connection seL4RPCCall file_system(from router.fs, to filesystem.fs);
@@ -56,24 +56,15 @@ assembly {
     router.ethdriver_global_endpoint = "router_ep";
     router.ethdriver_mac = [0x00, 0x19, 0xB8, 0x02, 0xC9, 0xEA];
 
-    router.timer_epit = true;
-    router.timer_id = 2;
-    router.timer_period_ns = 1000000000;
-
-    router_hw.timer_reg_paddr = 0x020D4000;
-    router_hw.timer_reg_size = 0x4000;
-    router_hw.timer_irq_irq_number = 89;
-
-    router.tcp_timer_epit = true;
-    router.tcp_timer_id = 1;
-    router.tcp_timer_period_ns = 250000000;
-
-    router_hw.tcp_timer_reg_paddr = 0x020D0000;
-    router_hw.tcp_timer_reg_size = 0x4000;
-    router_hw.tcp_timer_irq_irq_number = 88;
+    router.event_timer_global_endpoint = "router_ep";
+    router.event_timer_badge = 1;
+    router.event_timer_attributes = 1;
 
     fs_data.from_access = "R";
     fs_data.to_access = "W";
+
+    timeserver.timers_per_client = 2;
+    timeserver.priority = 255;
 
     HWEthdriver.irq_irq_number = 150;
 

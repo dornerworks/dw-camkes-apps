@@ -48,9 +48,8 @@ typedef struct
 
 extern void http_server_set_cgi_handlers(const tCGI *pCGIs, int iNumHandlers);
 
-void timer_irq_handle(void)
+void event_handle(void)
 {
-    timer_handle_interrupt();
     unsigned int secs = ++int_num_seconds;
 
     int ret = snprintf((char *)time_data, 150,
