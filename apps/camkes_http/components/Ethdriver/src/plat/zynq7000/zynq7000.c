@@ -13,6 +13,8 @@
 #include <ethdrivers/zynq7000.h>
 #include <ethdrivers/raw.h>
 
+#include <platform.h>
+
 void plat_configure_ethdriver(struct arm_eth_plat_config *plat_config) {
 
     if(!ethif_init) {
