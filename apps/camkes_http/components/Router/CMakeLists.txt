@@ -17,3 +17,5 @@ DeclareCAmkESComponent(Router
   INCLUDES include
   LIBS sel4camkes ethdrivers lwip sel4vspace
   )
+
+CAmkESAddCPPInclude("${CMAKE_CURRENT_LIST_DIR}/include/")

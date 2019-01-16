@@ -14,15 +14,26 @@
  *
  */
 
-import <Ethdriver.idl4>;
+#include <plat/ethernet.h>
 
-component Ethdriver {
-    has mutex ethdriver;
-    provides Ethdriver client;
-    consumes IRQ irq;
-}
+import <Ethdriver.idl4>;
 
 component HWEthDriver {
     hardware;
     emits IRQ irq;
 };
+
+component Ethdriver {
+    has mutex ethdriver;
+    provides Ethdriver client;
+
+    HARDWARE_ETHERNET_INTERFACES
+
+    composition {
+        HARDWARE_ETHERNET_COMPOSITION
+    }
+
+    configuration {
+        HARDWARE_ETHERNET_CONFIG
+    }
+}

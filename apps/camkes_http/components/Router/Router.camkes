@@ -9,10 +9,17 @@
  * @TAG(NICTA_GPL)
  */
 
+#include <router.h>
+
 import <Ethdriver.idl4>;
 import <http.idl4>;
 import <file_system.idl4>;
 import <Timer.idl4>;
+
+component Router_hw {
+    hardware;
+    provides HTTPServer http;
+}
 
 component Router {
     include "fs.h";
@@ -30,13 +37,12 @@ component Router {
     attribute string multicast_addr;
     attribute string mask_addr;
 
-    uses HTTPServer http_server;
     uses FileSystem fs;
     dataport fs_file_t fs_mem;
-}
 
-component Router_hw {
-    hardware;
+    HARDWARE_ROUTER_INTERFACES
 
-    provides HTTPServer http;
+    composition {
+        HARDWARE_ROUTER_COMPOSITION
+    }
 }
