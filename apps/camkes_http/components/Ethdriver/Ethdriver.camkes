@@ -20,7 +20,7 @@ import <Ethdriver.idl4>;
 
 component HWEthDriver {
     hardware;
-    emits IRQ irq;
+    HARDWARE_ETHERNET_PROVIDES_INTERFACES
 };
 
 component Ethdriver {

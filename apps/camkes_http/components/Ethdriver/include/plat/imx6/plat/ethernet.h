@@ -10,6 +10,9 @@
 
 #pragma once
 
+#define HARDWARE_ETHERNET_PROVIDES_INTERFACES                                         \
+    emits IRQ irq;
+
 #define HARDWARE_ETHERNET_INTERFACES                                                  \
     consumes IRQ irq;
 
