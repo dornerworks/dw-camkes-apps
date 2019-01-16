@@ -12,6 +12,10 @@ cmake_minimum_required(VERSION 3.7.2)
 
 project(FileSystem C)
 
+if(NOT EXISTS ${CMAKE_SOURCE_DIR}/web/includes)
+  execute_process(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/makefs.py)
+endif()
+
 DeclareCAmkESComponent(FileSystem
   SOURCES src/fs.c src/fsdata.c
   INCLUDES include web/includes
