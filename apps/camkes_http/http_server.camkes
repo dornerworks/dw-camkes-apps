@@ -62,7 +62,6 @@ assembly {
     fs_data.to_access = "W";
 
     timeserver.timers_per_client = 2;
-    timeserver.priority = 255;
 
     ethdriver.simple = true;
     ethdriver.cnode_size_bits = 12;
