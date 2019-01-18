@@ -15,6 +15,7 @@ import <Ethdriver.idl4>;
 import <http.idl4>;
 import <file_system.idl4>;
 import <Timer.idl4>;
+import <tcp.idl4>;
 
 component Router_hw {
     hardware;
@@ -39,6 +40,13 @@ component Router {
 
     uses FileSystem fs;
     dataport fs_file_t fs_mem;
+
+    /* TCP Echo Server Stuff */
+    attribute int num_client_recv_bufs;
+    provides TCP router;
+    dataport Buf router_recv_buf;
+    dataport Buf router_send_buf;
+    emits Notification recv_ready;
 
     HARDWARE_ROUTER_INTERFACES
 

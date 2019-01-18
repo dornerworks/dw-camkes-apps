@@ -24,3 +24,8 @@ connector seL4MultiSharedData {
     from Dataport template "seL4MultiSharedData-from.template.c";
     to Dataport template "seL4MultiSharedData-to.template.c";
 }
+
+connector seL4TCP {
+    from Procedure template "seL4TCP-from.template.c" with 0 threads;
+    to Procedure template "seL4TCP-to.template.c";
+}

@@ -23,6 +23,7 @@ import <global-connectors.camkes>;
 import <Ethdriver/Ethdriver.camkes>;
 import <Router/Router.camkes>;
 import <FileSystem/FileSystem.camkes>;
+import <Echo/Echo.camkes>;
 
 /* Global Components */
 import <TimeServer/TimeServer.camkes>;
@@ -33,6 +34,7 @@ assembly {
     component FileSystem filesystem;
     component Router router;
     component TimeServer timeserver;
+    component Echo echo;
 
     component Ethdriver ethdriver;
 
@@ -42,6 +44,12 @@ assembly {
     connection seL4SharedData fs_data(from router.fs_mem, to filesystem.fs_mem);
 
     connection seL4Ethdriver eth_driver(from router.ethdriver, to ethdriver.client);
+
+    /* Echo Server TCP connections */
+    connection seL4TCP echo_tcp(from echo.echo_tcp, to router.router);
+    connection seL4GlobalAsynchCallback recv_ready(from router.recv_ready, to echo.ready);
+    connection seL4MultiSharedData send_buf(from echo.echo_tcp_send_buf, to router.router_send_buf);
+    connection seL4MultiSharedData recv_buf(from echo.echo_tcp_recv_buf, to router.router_recv_buf);
   }
 
   configuration {
@@ -57,6 +65,15 @@ assembly {
     router.event_timer_global_endpoint = "router_ep";
     router.event_timer_badge = 1;
     router.event_timer_attributes = 1;
+
+    router.num_client_recv_bufs = 64;
+
+    echo.echo_tcp_recv_buf_attributes = "0";
+    echo.echo_tcp_send_buf_attributes = "0";
+    echo.echo_tcp_attributes = "0";
+    echo.echo_tcp_port = 40001;
+    echo.echo_tcp_global_endpoint = "echo_ep";
+    echo.ready_global_endpoint = "echo_ep";
 
     fs_data.from_access = "R";
     fs_data.to_access = "W";

@@ -1,0 +1,20 @@
+/*
+ * Copyright 2019, DornerWorks
+ *
+ * This software may be distributed and modified according to the terms of
+ * the GNU General Public License version 2. Note that NO WARRANTY is provided.
+ * See "LICENSE_GPLv2.txt" for details.
+ *
+ * @TAG(DORNERWORKS_GPL)
+ */
+
+import <tcp.idl4>;
+
+component Echo {
+    uses TCP echo_tcp;
+
+    dataport Buf echo_tcp_recv_buf;
+    dataport Buf echo_tcp_send_buf;
+
+    consumes Notification ready;
+}

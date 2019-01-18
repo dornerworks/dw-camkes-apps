@@ -19,6 +19,7 @@ CAmkESAddTemplatesPath(templates)
 add_subdirectory(components/Ethdriver)
 add_subdirectory(components/Router)
 add_subdirectory(components/FileSystem)
+add_subdirectory(components/Echo)
 
 DeclareCAmkESRootServer(http_server.camkes)
 
